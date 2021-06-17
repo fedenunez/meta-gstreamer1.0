@@ -14,7 +14,8 @@ UPSTREAM_VERSION_UNKNOWN = "1"
 
 S = "${WORKDIR}/git"
 
-inherit meson pkgconfig distro_features_check
+inherit autotools pkgconfig distro_features_check
+
 
 
 ANY_OF_DISTRO_FEATURES = "${GTK3DISTROFEATURES}"

@@ -29,12 +29,15 @@ PACKAGES =+ "${PN}-tests"
 # otherwise try to check if EGL can be used.
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'x11 opengl', 'glx', \
                         bb.utils.contains('DISTRO_FEATURES',     'opengl', 'egl', \
-                                                                       '', d), d)}"
+                        bb.utils.contains('DISTRO_FEATURES',     'wayland', 'wayland', \
+                        bb.utils.contains('DISTRO_FEATURES',     'x11', 'x11', \
+                   "
 
 PACKAGECONFIG ??= "drm \
                    ${PACKAGECONFIG_GL} \
-                   ${@bb.utils.filter('DISTRO_FEATURES', 'wayland x11', d)}"
-
+                        bb.utils.contains('DISTRO_FEATURES',     'wayland', 'wayland', \
+                        bb.utils.contains('DISTRO_FEATURES',     'x11', 'x11', \
+"
 PACKAGECONFIG[drm] = "--enable-drm,--disable-drm,udev libdrm"
 PACKAGECONFIG[egl] = "--enable-egl,--disable-egl,virtual/egl"
 PACKAGECONFIG[glx] = "--enable-glx,--disable-glx,virtual/libgl"
